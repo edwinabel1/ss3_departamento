@@ -1,11 +1,15 @@
 mod actions;
-use std::io;
+use std::io::{self, Write};
+
+use actions::ActQuit;
 
 fn main() {
-    let my_actions: Vec<Box<dyn actions::Action>> = Vec::new();
+    let my_actions = act_init();
     loop {
-        print!("^");
+        print!("^_-> ");
+        io::stdout().flush().expect("flush()");
         let mut act_str = String::new();
+
         if let Err(e) = io::stdin().read_line(&mut act_str) {
             println!("invalidate input : {}", e);
             continue;
@@ -21,4 +25,10 @@ fn main() {
             }),
         }
     }
+}
+
+fn act_init() -> Vec<Box<dyn actions::Action>> {
+    let mut my_actions: Vec<Box<dyn actions::Action>> = Vec::new();
+    my_actions.push(Box::new(ActQuit {}));
+    my_actions
 }

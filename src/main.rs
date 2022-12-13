@@ -28,7 +28,6 @@ fn main() {
 }
 
 fn act_init() -> Vec<Box<dyn actions::Action>> {
-    let mut my_actions: Vec<Box<dyn actions::Action>> = Vec::new();
-    my_actions.push(Box::new(ActQuit {}));
+    let my_actions: Vec<Box<dyn actions::Action>> = vec![Box::new(ActQuit {})];
     my_actions
 }

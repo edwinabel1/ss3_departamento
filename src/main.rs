@@ -18,9 +18,7 @@ fn main() {
             continue;
         };
 
-        let act_strs: Vec<&str> = act_str.split(' ').collect();
-        let mut act_strs_iter = act_strs.iter();
-        if let Some(s) = act_strs_iter.next() {
+        if let Some(s) = act_str.split(' ').next() {
             if let Some(act) = my_actions.get(s.trim()) {
                 act.run(&act_str)
             }

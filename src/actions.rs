@@ -9,7 +9,6 @@ pub struct ActQuit {}
 
 impl Action for ActQuit {
     fn isme(&self, s: &str) -> bool {
-        let s = s.trim();
         s.eq("quit") || s.eq("exit") || s.eq("q")
     }
 

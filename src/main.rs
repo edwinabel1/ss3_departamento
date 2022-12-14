@@ -19,7 +19,7 @@ fn main() {
         match act_strs_iter.next() {
             None => continue,
             Some(s) => my_actions.iter().for_each(|act| {
-                if act.isme(s) {
+                if act.isme(s.trim()) {
                     act.run(&act_str);
                 }
             }),

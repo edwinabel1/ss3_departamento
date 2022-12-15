@@ -26,18 +26,9 @@ impl Action for ActAdd {
     fn run(&self, acts: &str, emp: &mut Empresa) {
         println!("okay.");
         let (p, d) = scan_fmt_some!(acts, "add {} to {}\r\n", String, String);
-        //p.zip_with(d, |fp,fd|emp.add(&fp, &fd));
-        p.zip(d).map(|(p, d)| {
-            emp.add(&p, &d);
-            println!("{:#?}", *emp.get_departamento());
-        });
-        /*
-        if p.is_some() && d.is_some() {
-            let p = p.unwrap();
-            let d = d.unwrap();
+        if let Some((p, d)) = p.zip(d) {
             emp.add(&p, &d);
             println!("{:#?}", *emp.get_departamento());
         }
-        */
     }
 }

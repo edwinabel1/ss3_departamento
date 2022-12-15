@@ -13,15 +13,11 @@ fn main() {
         let mut act_str = String::new();
 
         io::stdout().flush().expect("flush()");
-        if let Err(e) = io::stdin().read_line(&mut act_str) {
-            println!("invalidate input : {}", e);
-            continue;
-        };
+        io::stdin().read_line(&mut act_str).expect("read_line()");
 
-        if let Some(s) = act_str.split(' ').next() {
-            if let Some(act) = my_actions.get(s.trim()) {
-                act.run(&act_str, &mut empresa);
-            }
+        let s = act_str.split(' ').next();
+        if let Some(act) = s.and_then(|ss| my_actions.get(ss.trim())) {
+            act.run(&act_str, &mut empresa)
         }
     }
 }

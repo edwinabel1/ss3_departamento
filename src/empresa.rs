@@ -14,7 +14,6 @@ impl Empresa {
     pub fn add(&mut self, p: &str, d: &str) {
         self.departamento
             .entry(d.to_owned())
-            //.or_insert(Departamento::new())
             .or_insert_with(Departamento::new)
             .personal
             .push(p.to_owned());

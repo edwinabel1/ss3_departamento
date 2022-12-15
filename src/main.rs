@@ -1,13 +1,13 @@
 mod actions;
-use std::{
-    collections::HashMap,
-    io::{self, Write},
-};
+mod empresa;
 
-use actions::ActQuit;
-
+use std::io::{self, Write};
+#[macro_use]
+extern crate scan_fmt;
 fn main() {
-    let my_actions = act_init();
+    let my_actions = actions::act_init();
+    let mut empresa = empresa::Empresa::new();
+
     loop {
         print!("^_-> ");
         let mut act_str = String::new();
@@ -20,16 +20,8 @@ fn main() {
 
         if let Some(s) = act_str.split(' ').next() {
             if let Some(act) = my_actions.get(s.trim()) {
-                act.run(&act_str)
+                act.run(&act_str, &mut empresa);
             }
         }
     }
-}
-
-fn act_init() -> HashMap<&'static str, Box<dyn actions::Action>> {
-    let mut r: HashMap<&str, Box<dyn actions::Action>> = HashMap::new();
-    r.insert("q", Box::new(ActQuit {}));
-    r.insert("quit", Box::new(ActQuit {}));
-    r.insert("exit", Box::new(ActQuit {}));
-    r
 }

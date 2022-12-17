@@ -12,15 +12,17 @@ impl Empresa {
     }
 
     pub fn add(&mut self, p: &str, d: &str) {
-        self.departamento
+        let personal = &mut self
+            .departamento
             .entry(d.to_owned())
             .or_insert_with(Departamento::new)
-            .personal
-            .push(p.to_owned());
+            .personal;
+        personal.push(p.to_owned());
+        personal.sort_by_key(|name| name.to_lowercase());
     }
 
-    pub fn get_departamento(&self) -> &HashMap<String, Departamento> {
-        &self.departamento
+    pub fn get_departamento(&self, d: &str) -> Option<&Departamento> {
+        self.departamento.get(d)
     }
 }
 
@@ -33,5 +35,9 @@ impl Departamento {
         Departamento {
             personal: Vec::new(),
         }
+    }
+
+    pub fn get_personal(&self) -> &[String] {
+        self.personal.as_slice()
     }
 }

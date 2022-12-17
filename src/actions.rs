@@ -7,6 +7,8 @@ pub fn act_init() -> HashMap<&'static str, Box<dyn Action>> {
     r.insert("quit", Box::new(ActQuit {}));
     r.insert("exit", Box::new(ActQuit {}));
     r.insert("add", Box::new(ActAdd {}));
+    r.insert("list", Box::new(ActList {}));
+    r.insert("ls", Box::new(ActList {}));
     r
 }
 
@@ -24,11 +26,25 @@ impl Action for ActQuit {
 pub struct ActAdd {}
 impl Action for ActAdd {
     fn run(&self, acts: &str, emp: &mut Empresa) {
-        println!("okay.");
+        println!("action[add].");
         let (p, d) = scan_fmt_some!(acts, "add {} to {}\r\n", String, String);
         if let Some((p, d)) = p.zip(d) {
             emp.add(&p, &d);
-            println!("{:#?}", *emp.get_departamento());
+            println!("okay.");
+        }
+    }
+}
+
+pub struct ActList {}
+impl Action for ActList {
+    fn run(&self, acts: &str, emp: &mut Empresa) {
+        println!("action[list].");
+        if let Some(d) = acts.split(' ').nth(1) {
+            let d = d.trim().to_owned();
+            println!("do: list departamento {}:", d);
+            println!("{:#?}", emp.get_departamento(&d).map(|d| d.get_personal()));
+        } else {
+            println!("do: list all departamento.");
         }
     }
 }

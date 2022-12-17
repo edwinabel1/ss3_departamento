@@ -25,4 +25,17 @@ impl Empresa {
     pub fn get_departamento(&self, d: &str) -> Option<&Departamento> {
         self.departamento.get(d)
     }
+
+    pub fn get_all_personal(&self) -> Vec<(&String, &String)> {
+        let mut r: Vec<(&String, &String)> = self
+            .departamento
+            .iter()
+            .flat_map(|i| {
+                let p = i.1.get_personal();
+                p.iter().zip(vec![i.0; p.len()])
+            })
+            .collect();
+        r.sort_by_key(|name| name.0.to_lowercase());
+        r
+    }
 }

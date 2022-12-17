@@ -40,11 +40,12 @@ impl Action for ActList {
     fn run(&self, acts: &str, emp: &mut Empresa) {
         println!("action[list].");
         if let Some(d) = acts.split(' ').nth(1) {
-            let d = d.trim().to_owned();
-            println!("do: list departamento {}:", d);
-            println!("{:#?}", emp.get_departamento(&d).map(|d| d.get_personal()));
+            let d = d.trim();
+            println!("list departamento {}:", d);
+            println!("{:#?}", emp.get_departamento(d).map(|d| d.get_personal()));
         } else {
-            println!("do: list all departamento.");
+            println!("list all departamento.");
+            println!("{:#?}", emp.get_all_personal());
         }
     }
 }
